@@ -1,0 +1,8 @@
+{
+  "last_update": "08-02-2023",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "cryptpad",
+  "source": "github",
+  "upstream_repo": "xwiki-labs/cryptpad",
+  "upstream_version": "5.2.1"
+}
