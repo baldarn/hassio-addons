@@ -1,6 +1,5 @@
 {
   "build_from": {
-    "aarch64": "promasu/cryptpad:5.2.1",
     "amd64": "promasu/cryptpad:5.2.1"
   },
   "codenotary": {
