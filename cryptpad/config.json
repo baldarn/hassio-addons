@@ -5,7 +5,6 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Cryptpad for Home Assistant",
-  "image": "ghcr.io/alexbelgium/cryptpad-{arch}",
   "init": false,
   "map": [
     "share:rw",
