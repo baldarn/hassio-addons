@@ -1,6 +1,6 @@
 {
   "build_from": {
-    "amd64": "promasu/cryptpad:5.2.1"
+    "amd64": "promasu/cryptpad:v5.2.1"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
