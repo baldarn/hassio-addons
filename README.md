@@ -41,7 +41,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ## Statistics
 
-Number of addons in the repository : 75
+Number of addons in the repository : 76
 
 Total number of addons installed : 12886
 
@@ -149,6 +149,14 @@ Downloads evolution :
 ![armv7][armv7-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
+
+&#10003;  [Cryptpad](cryptpad/) : Cryptpad for Home Assistant
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fcryptpad%2Fconfig.json)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fcryptpad%2Fupdater.json)
+![aarch64no][aarch64no-badge]
+![amd64][amd64-badge]
+![armv7no][armv7no-badge]
 
 &#10003;  [Elasticsearch server](elasticsearch/) : Free and Open, Distributed, RESTful Search Engine
 
