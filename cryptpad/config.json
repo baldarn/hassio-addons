@@ -14,7 +14,8 @@
     "DOMAIN": "homeassistant.local",
     "SANDBOX_DOMAIN": "homeassistant.local",
     "certfile": "fullchain.pem",
-    "keyfile": "privkey.pem"
+    "keyfile": "privkey.pem",
+    "ssl": false
   },
   "ports": {
     "3000/tcp": 3000,
@@ -28,7 +29,8 @@
     "DOMAIN": "str",
     "SANDBOX_DOMAIN": "str",
     "certfile": "str",
-    "keyfile": "str"
+    "keyfile": "str",
+    "ssl": "bool"
   },
   "slug": "cryptpad",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/cryptpad",

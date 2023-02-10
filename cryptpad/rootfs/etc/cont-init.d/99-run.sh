@@ -13,8 +13,18 @@
 # CPAD_TLS_DHPARAM	Path to Diffie-Hellman parameters file	No	/etc/nginx/dhparam.pem
 # CPAD_HTTP2_DISABLE
 
-CPAD_TLS_CERT="/ssl/$(bashio::config 'certfile')" "$file"
-CPAD_TLS_KEY="/ssl/$(bashio::config 'keyfile')" "$file"
+
+# Add ssl
+bashio::config.require.ssl
+if bashio::config.true 'ssl'; then
+    PROTOCOL=https
+    bashio::log.info "ssl is enabled"
+    CPAD_TLS_CERT="/ssl/$(bashio::config 'certfile')"
+    CPAD_TLS_KEY="/ssl/$(bashio::config 'keyfile')"
+    chmod 744 /ssl/*
+else
+    PROTOCOL=http
+fi
 
 ##################
 # ADAPT DOMAIN #
@@ -25,7 +35,6 @@ if bashio::config.true 'CPAD_MAIN_DOMAIN'; then
 else
     CPAD_MAIN_DOMAIN="$PROTOCOL://$(bashio::config 'DOMAIN'):$(bashio::addon.port 3000)"
     bashio::log.blue "CPAD_MAIN_DOMAIN not set, using extrapolated value : $CPAD_MAIN_DOMAIN"
-    sed -i "/server/a CPAD_MAIN_DOMAIN=$CPAD_MAIN_DOMAIN" "$file"
 fi
 
 ##################
@@ -37,13 +46,4 @@ if bashio::config.true 'CPAD_SANDBOX_DOMAIN'; then
 else
     CPAD_SANDBOX_DOMAIN="$PROTOCOL://$(bashio::config 'SANDBOX_DOMAIN'):$(bashio::addon.port 3001)"
     bashio::log.blue "CPAD_SANDBOX_DOMAIN not set, using extrapolated value : $CPAD_SANDBOX_DOMAIN"
-    sed -i "/server/a CPAD_SANDBOX_DOMAIN=$CPAD_SANDBOX_DOMAIN" "$file"
 fi
-
-##############
-# LAUNCH APP #
-##############
-
-bashio::log.info "Please wait while the app is loading !"
-
-/./usr/bin/entrypoint
