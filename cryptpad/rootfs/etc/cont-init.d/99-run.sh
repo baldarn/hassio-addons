@@ -19,8 +19,8 @@ bashio::config.require.ssl
 if bashio::config.true 'ssl'; then
     PROTOCOL=https
     bashio::log.info "ssl is enabled"
-    CPAD_TLS_CERT="/ssl/$(bashio::config 'certfile')"
-    CPAD_TLS_KEY="/ssl/$(bashio::config 'keyfile')"
+    export CPAD_TLS_CERT="/ssl/$(bashio::config 'certfile')"
+    export CPAD_TLS_KEY="/ssl/$(bashio::config 'keyfile')"
     chmod 744 /ssl/*
 else
     PROTOCOL=http
@@ -33,7 +33,7 @@ fi
 if bashio::config.true 'CPAD_MAIN_DOMAIN'; then
     bashio::log.blue "CPAD_MAIN_DOMAIN set, using value : $(bashio::config 'CPAD_MAIN_DOMAIN')"
 else
-    CPAD_MAIN_DOMAIN="$PROTOCOL://$(bashio::config 'DOMAIN'):$(bashio::addon.port 3000)"
+    export CPAD_MAIN_DOMAIN="$PROTOCOL://$(bashio::config 'DOMAIN'):$(bashio::addon.port 3000)"
     bashio::log.blue "CPAD_MAIN_DOMAIN not set, using extrapolated value : $CPAD_MAIN_DOMAIN"
 fi
 
@@ -44,6 +44,6 @@ fi
 if bashio::config.true 'CPAD_SANDBOX_DOMAIN'; then
     bashio::log.blue "CPAD_SANDBOX_DOMAIN set, using value : $(bashio::config 'CPAD_SANDBOX_DOMAIN')"
 else
-    CPAD_SANDBOX_DOMAIN="$PROTOCOL://$(bashio::config 'SANDBOX_DOMAIN'):$(bashio::addon.port 3001)"
+    export CPAD_SANDBOX_DOMAIN="$PROTOCOL://$(bashio::config 'SANDBOX_DOMAIN'):$(bashio::addon.port 3001)"
     bashio::log.blue "CPAD_SANDBOX_DOMAIN not set, using extrapolated value : $CPAD_SANDBOX_DOMAIN"
 fi

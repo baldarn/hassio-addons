@@ -26,4 +26,5 @@ for SCRIPTS in /etc/cont-init.d/*; do
     /."$SCRIPTS" || echo "$SCRIPTS: exiting $?"
 done
 
-exec "$@"
+cd /cryptpad || true
+npm start
