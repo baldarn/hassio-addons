@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Immich ] It doesn't start (opened 2023-02-04)](https://github.com/alexbelgium/hassio-addons/issues/686) by [@IonutNeagu](https://github.com/IonutNeagu)
 # Home assistant add-on: immich
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -20,7 +19,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 ## About
 
 Web based files browser.
-This addon is based on .
+This addon is based on the [docker image](https://github.com/imagegenius/docker-immich) from imagegenius.
 
 ## Configuration
 

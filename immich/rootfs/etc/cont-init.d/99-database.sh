@@ -2,33 +2,6 @@
 # shellcheck shell=bash
 # shellcheck disable=SC2155,SC2016
 
-###################################
-# Export all addon options as env #
-###################################
-
-bashio::log.info "Setting variables"
-
-# For all keys in options.json
-JSONSOURCE="/data/options.json"
-
-# Export keys as env variables
-# echo "All addon options were exported as variables"
-mapfile -t arr < <(jq -r 'keys[]' "${JSONSOURCE}")
-
-for KEYS in "${arr[@]}"; do
-    # export key
-    VALUE=$(jq ."$KEYS" "${JSONSOURCE}")
-    line="${KEYS}='${VALUE//[\"\']/}'"
-    # text
-    if bashio::config.false "verbose" || [[ "${KEYS}" == *"PASS"* ]]; then
-        bashio::log.blue "${KEYS}=******"
-    else
-        bashio::log.blue "$line"
-    fi
-    # Use locally
-    export "${KEYS}=${VALUE//[\"\']/}"
-done
-
 ###################
 # Define database #
 ###################
@@ -100,7 +73,12 @@ case $(bashio::config 'database') in
 
 esac
 
-##################
-# Starting redis #
-##################
-exec redis-server & bashio::log.info "Starting redis"
+# Export variables
+if [ -d /var/run/s6/container_environment ]; then
+    printf "%s" "$DB_USERNAME" > /var/run/s6/container_environment/DB_USERNAME
+    printf "%s" "$DB_PASSWORD" > /var/run/s6/container_environment/DB_PASSWORD
+    printf "%s" "$DB_DATABASE_NAME" > /var/run/s6/container_environment/DB_DATABASE_NAME
+    printf "%s" "$DB_PORT" > /var/run/s6/container_environment/DB_PORT
+    printf "%s" "$DB_HOSTNAME" > /var/run/s6/container_environment/DB_HOSTNAME
+    printf "%s" "$JWT_SECRET" > /var/run/s6/container_environment/JWT_SECRET
+fi
