@@ -11,16 +11,6 @@ if bashio::config.has_value 'localdisks'; then
     MOREDISKS=$(bashio::config 'localdisks')
     echo "Local Disks mounting..."
 
-    # Mount using UID/GID values
-    if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID' && [ -z ${ROOTMOUNT+x} ]; then
-        echo "Using PUID $(bashio::config 'PUID') and PGID $(bashio::config 'PGID')"
-        PUID="$(bashio::config 'PUID')"
-        PGID="$(bashio::config 'PGID')"
-    else
-        PUID="0"
-        PGID="0"
-    fi
-
     # Separate comma separated values
     # shellcheck disable=SC2086
     for disk in ${MOREDISKS//,/ }; do
@@ -39,20 +29,44 @@ if bashio::config.has_value 'localdisks'; then
         # Creates dir
         mkdir -p /mnt/"$disk"
         chown "$PUID:$PGID" /mnt/"$disk"
-        # Legacy mounting : mount to share if still exists (avoid breaking changes)
-        # shellcheck disable=SC2015
-        [ -d /share/"$disk" ] && mount "$devpath"/"$disk" /share/"$disk" || true
-        # Mount
-        # Mount if ntfs
-        if command -v "apk" &>/dev/null && [[ "$(fdisk -l "$devpath"/"$disk")" == *NTFS* ]]; then
-            bashio::log.info "NTFS on Alpine detected, mounting with ntfs-3g"
-            ntfs-3g "$devpath"/"$disk" /mnt/"$disk" || true
-        fi
-        # shellcheck disable=SC2015
-        mount "$devpath"/"$disk" -o "uid=$PUID,gid=$PGID" /mnt/"$disk" && bashio::log.info "Success! $disk mounted to /mnt/$disk" || \
-            (mount "$devpath"/"$disk" /mnt/"$disk" && bashio::log.info "Success! $disk mounted to /mnt/$disk") || \
-            (bashio::log.fatal "Unable to mount local drives! Please check the name." && rmdir /mnt/$disk)
 
+        # Install lsblk
+        if ! command -v "lsblk" &>/dev/null; then
+            if command -v "apk" &>/dev/null; then apk add --no-cache lsblk; fi
+            if command -v "apt" &>/dev/null; then apt-get update && apt-get install -yqq util-linux; fi
+        fi
+
+        # Check FS type and set relative options (thanks @https://github.com/dianlight/hassio-addons)
+        fstype=$(lsblk "$devpath"/"$disk" -no fstype)
+        options="nosuid,relatime,noexec"
+        type="auto"
+        bashio::log.info "Mounting ${disk} of type ${fstype}"
+
+        case "$fstype" in
+            exfat | vfat | msdos)
+                bashio::log.warning "${fstype} permissions and ACL don't works and this is an EXPERIMENTAL support"
+                options="${options},umask=000"
+                ;;
+            ntfs)
+                bashio::log.warning "${fstype} is an EXPERIMENTAL support"
+                options="${options},umask=000"
+                type="ntfs"
+                ;;
+            *)
+                if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID'; then
+                    echo "Using PUID $(bashio::config 'PUID') and PGID $(bashio::config 'PGID')"
+                    options="$options,uid=$(bashio::config 'PUID'),gid=$(bashio::config 'PGID')"
+                fi
+                ;;
+        esac
+
+        # Legacy mounting : mount to share if still exists (avoid breaking changes)
+        dirpath="/mnt"
+        if [ -d /share/"$disk" ]; then dirpath="/share"; fi
+
+        # shellcheck disable=SC2015
+        mount -t $type "$devpath"/"$disk" "$dirpath"/"$disk" -o $options && bashio::log.info "Success! $disk mounted to /mnt/$disk" || \
+            (bashio::log.fatal "Unable to mount local drives! Please check the name." && rmdir /mnt/$disk)
     done
 
 fi

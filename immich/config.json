@@ -1,8 +1,7 @@
 {
   "arch": [
     "aarch64",
-    "amd64",
-    "armv7"
+    "amd64"
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Self-hosted photo and video backup solution directly from your mobile phone",
@@ -97,6 +96,6 @@
   ],
   "slug": "immich",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.45.0-5",
+  "version": "1.47.3",
   "webui": "http://[HOST]:[PORT:8080]"
 }

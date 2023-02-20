@@ -43,16 +43,16 @@ If you want to do add the repository manually, please follow the procedure highl
 
 Number of addons in the repository : 76
 
-Total number of addons installed : 14133
+Total number of addons installed : 13610
 
 Top 3 most installed addons :
 1. Portainer (3080x)
 2. Filebrowser (2036x)
-3. Epicgamesfree (437x)
+3. Myelectricaldata (416x)
 
 Most used architectures :
-- amd64: 56%
-- aarch64: 39%
+- amd64: 58%
+- aarch64: 38%
 - armv7: 5%
 
 Downloads evolution :
@@ -275,7 +275,7 @@ Downloads evolution :
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fimmich%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 ![MariaDB][mariadb-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
@@ -526,7 +526,7 @@ Downloads evolution :
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/download-circle.svg) [Radarr](radarr/) : A fork of Sonarr to work with movies like Couchpotato
+&#10003; ![image](https://api.iconify.design/mdi/movie-outline.svg) [Radarr](radarr/) : A fork of Sonarr to work with movies like Couchpotato
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fradarr%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fradarr%2Fupdater.json)
@@ -614,7 +614,7 @@ Downloads evolution :
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/download-circle-outline.svg) [Sonarr](sonarr/) : Can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them
+&#10003; ![image](https://api.iconify.design/mdi/television-classic.svg) [Sonarr](sonarr/) : Can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fsonarr%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fsonarr%2Fupdater.json)
