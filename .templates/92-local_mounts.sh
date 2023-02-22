@@ -28,11 +28,15 @@ if bashio::config.has_value 'localdisks'; then
 
         # Creates dir
         mkdir -p /mnt/"$disk"
-        chown "$PUID:$PGID" /mnt/"$disk"
+        if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID'; then
+          PUID="$(bashio::config 'PUID')"
+          PGID="$(bashio::config 'PGID')"
+          chown "$PUID:$PGID" /mnt/"$disk"
+        fi
 
         # Install lsblk
         if ! command -v "lsblk" &>/dev/null; then
-            if command -v "apk" &>/dev/null; then apk add --no-cache lsblk; fi
+            if command -v "apk" &>/dev/null; then apk add --no-cache lsblk >/dev/null; fi
             if command -v "apt" &>/dev/null; then apt-get update && apt-get install -yqq util-linux; fi
         fi
 
